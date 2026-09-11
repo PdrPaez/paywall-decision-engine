@@ -46,6 +46,7 @@ def access(payload, operation, key=None):
     try: result=execute(payload.subject_id,payload.content_id,operation,store,key)
     except KeyError as e: raise HTTPException(404,str(e))
     if operation=='open': store.opens[(payload.subject_id,key)]=(fp,result)
+    store.save()
     return result
 @app.post('/api/access/evaluate')
 def evaluate(p:AccessIn): return access(p,'evaluate')

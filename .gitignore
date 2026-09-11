@@ -5,6 +5,7 @@ __pycache__/
 .env
 *.db
 *.sqlite3
+paywall.db
 node_modules/
 dist/
 coverage/

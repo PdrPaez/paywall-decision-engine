@@ -17,7 +17,7 @@ def process(payload,signature,store):
         return {"event_id":eid,"accepted":True,"duplicate":True,"projection_applied":False,"reason":"duplicate_event"}
     subject=data["subject_id"]; occurred=datetime.fromisoformat(data["occurred_at"]); sub=store.subs.get(subject)
     if sub and sub.last_event and occurred < sub._occurred_at:
-        store.events[eid]={"normalized":normalized,"occurred_at":occurred}; store.event_history.append(data)
+        store.events[eid]={"normalized":normalized,"occurred_at":occurred}; store.event_history.append(data); store.save()
         return {"event_id":eid,"accepted":True,"duplicate":False,"projection_applied":False,"reason":"stale_event"}
     if not sub:
         from ..models.domain import Subscription
@@ -26,5 +26,5 @@ def process(payload,signature,store):
     if sub.state==SubState.PAST_DUE: sub.grace_period_end=occurred+timedelta(days=3)
     if data.get("cancel_at_period_end"): sub.cancel_at_period_end=True
     if data.get("period_end"): sub.current_period_end=datetime.fromisoformat(data["period_end"])
-    store.events[eid]={"normalized":normalized,"occurred_at":occurred}; store.event_history.append(data)
+    store.events[eid]={"normalized":normalized,"occurred_at":occurred}; store.event_history.append(data); store.save()
     return {"event_id":eid,"accepted":True,"duplicate":False,"projection_applied":True,"reason":"projection_updated","projection_version":sub.version}
