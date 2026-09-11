@@ -1,0 +1,14 @@
+[
+ {"id":"public-anonymous","subject":"anonymous_demo","content":"article_public","expected":"allow","reason":"content_public"},
+ {"id":"metered-anonymous-remaining","subject":"anonymous_demo","content":"article_metered_1","expected":"allow","reason":"meter_remaining"},
+ {"id":"metered-anonymous-exhausted","subject":"anonymous_demo","content":"article_metered_1","seed_usage":3,"expected":"paywall","reason":"meter_exhausted"},
+ {"id":"registered-free-remaining","subject":"user_free","content":"article_metered_1","expected":"allow","reason":"meter_remaining"},
+ {"id":"premium-without-entitlement","subject":"user_free","content":"article_premium_1","expected":"paywall","reason":"premium_entitlement_missing"},
+ {"id":"premium-subscriber","subject":"user_premium","content":"article_premium_1","expected":"allow","reason":"premium_entitlement_present"},
+ {"id":"trial-active","subject":"trial_demo","content":"article_premium_1","expected":"allow","reason":"premium_entitlement_present"},
+ {"id":"past-due-grace","subject":"grace_demo","content":"article_premium_1","expected":"allow_with_warning","reason":"past_due_grace_active"},
+ {"id":"grace-expired","subject":"expired_demo","content":"article_premium_1","expected":"paywall","reason":"premium_entitlement_missing"},
+ {"id":"cancel-before-expiry","subject":"cancel_demo","content":"article_premium_1","expected":"allow","reason":"premium_entitlement_present"},
+ {"id":"idempotent-open","subject":"anonymous_demo","content":"article_metered_1","expected":"allow","reason":"meter_remaining"},
+ {"id":"duplicate-webhook","subject":"user_free","content":"article_public","expected":"allow","reason":"content_public"}
+]
