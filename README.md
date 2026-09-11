@@ -44,7 +44,7 @@ Open http://localhost:5173. The API is http://localhost:8000.
 
 The following image is a browser capture of the running React/XYFlow explorer.
 
-![Paywall Decision Engine explorer](docs/screenshots/meter-remaining.png)
+![Paywall Decision Engine explorer](docs/screenshots/explorer-final.png)
 
 ## Deterministic evaluation
 
