@@ -2,7 +2,7 @@
 
 An executable reference implementation for subscription access, entitlements, metered usage, billing projection, and traceable paywall decisions.
 
-The project is deliberately local-first: Python/FastAPI, SQLite-compatible persistence boundary, deterministic seed data, a mock HMAC billing provider, and a React + XYFlow visual explorer. It does not implement checkout, cards, authentication, or a provider-time authorization dependency.
+The project is deliberately local-first and Docker-free: Python/FastAPI, normalized SQLite persistence, deterministic seed data, a mock HMAC billing provider, and a React + XYFlow visual explorer. It does not implement checkout, cards, authentication, or a provider-time authorization dependency.
 
 ## Capabilities
 
@@ -76,7 +76,7 @@ See [docs/architecture.md](docs/architecture.md), [docs/decision-lifecycle.md](d
 
 ### Delivered
 
-- PDE-001–PDE-010: repository, domain catalog, subscription semantics, entitlements, monthly meter, and open idempotency
+- PDE-001–PDE-010: repository, domain catalog, subscription semantics, entitlements, monthly meter, open idempotency, and normalized SQLite tables
 - PDE-011–PDE-019: ordered policies, engine, API, traces, signed mock billing, stale/duplicate handling, and 12-scenario evaluation
 - PDE-020–PDE-025: interactive XYFlow explorer, backend trace mapping, inspector, replay-ready execution model
 - PDE-026–PDE-027: quality gates, documentation, and portfolio polish
