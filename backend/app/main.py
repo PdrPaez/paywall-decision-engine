@@ -11,6 +11,7 @@ from .store import store
 
 app=FastAPI(title="Paywall Decision Engine",version="0.1.0"); app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_methods=["*"],allow_headers=["*"])
 class AccessIn(BaseModel): subject_id:str; content_id:str
+class TimeIn(BaseModel): timestamp:str
 @app.get('/health')
 def health(): return {"status":"ok","sqlite":"ready","billing_provider":"mock","demo_mode":True}
 @app.get('/api/subjects')
@@ -64,6 +65,10 @@ def trace(tid:str):
 def reset(): store.reset(); return {"reset":True}
 @app.post('/api/evaluation/run')
 def evaluation(): return run_eval()
+@app.post('/api/demo/time')
+def set_demo_time(payload:TimeIn):
+    from datetime import datetime
+    clock.set(datetime.fromisoformat(payload.timestamp)); return {"current_time":clock.now()}
 @app.get('/api/billing/events')
 def events(): return store.event_history
 @app.post('/api/billing/webhooks/mock')
@@ -78,6 +83,10 @@ def billing_action(action:str):
     from datetime import timedelta
     if action not in {'start-premium','mark-past-due','recover','cancel-at-period-end','expire','send-duplicate','send-stale'}: raise HTTPException(404,'unknown_action')
     et={'start-premium':'subscription.started','mark-past-due':'subscription.past_due','recover':'subscription.recovered','cancel-at-period-end':'subscription.updated','expire':'subscription.expired'} .get(action,'subscription.updated')
-    now=clock.now(); data={"event_id":str(uuid.uuid4()),"event_type":et,"provider":"mock","occurred_at":now.isoformat().replace('+00:00','Z'),"subject_id":"user_premium","plan":"premium","period_end":(now+timedelta(days=30)).isoformat().replace('+00:00','Z'),"cancel_at_period_end":action=='cancel-at-period-end'}; body=__import__('json').dumps(data).encode(); result=process(body,sign(body),store)
+    now=clock.now()
+    if action=='send-stale' and store.subs.get('user_premium') and store.subs['user_premium'].last_event:
+        occurred=now-timedelta(days=1)
+    else: occurred=now
+    data={"event_id":str(uuid.uuid4()),"event_type":et,"provider":"mock","occurred_at":occurred.isoformat().replace('+00:00','Z'),"subject_id":"user_premium","plan":"premium","period_end":(now+timedelta(days=30)).isoformat().replace('+00:00','Z'),"cancel_at_period_end":action=='cancel-at-period-end'}; body=__import__('json').dumps(data).encode(); result=process(body,sign(body),store)
     if action=='send-duplicate': result=process(body,sign(body),store)
     return result
