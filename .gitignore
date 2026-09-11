@@ -12,3 +12,5 @@ coverage/
 .idea/
 .vscode/
 
+backend/*.egg-info/
+frontend/*.tsbuildinfo
