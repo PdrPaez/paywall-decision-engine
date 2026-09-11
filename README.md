@@ -72,6 +72,8 @@ Billing provider state is normalized into an internal subscription projection. T
 
 See [docs/architecture.md](docs/architecture.md), [docs/decision-lifecycle.md](docs/decision-lifecycle.md), [docs/entitlement-model.md](docs/entitlement-model.md), [docs/billing-events.md](docs/billing-events.md), and [docs/visual-flow.md](docs/visual-flow.md).
 
+The complete card-by-card delivery map is in [docs/roadmap.md](docs/roadmap.md).
+
 ## Roadmap
 
 ### Delivered
