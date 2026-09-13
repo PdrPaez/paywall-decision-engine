@@ -1,5 +1,7 @@
 # Paywall Decision Engine
 
+[![CI](https://github.com/PdrPaez/paywall-decision-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/PdrPaez/paywall-decision-engine/actions/workflows/ci.yml)
+
 An executable reference implementation for subscription access, entitlements, metered usage, billing projection, and traceable paywall decisions.
 
 The project is deliberately local-first and Docker-free: Python/FastAPI, normalized SQLite persistence, deterministic seed data, a mock HMAC billing provider, and a React + XYFlow visual explorer. It does not implement checkout, cards, authentication, or a provider-time authorization dependency.
