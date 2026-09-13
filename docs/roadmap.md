@@ -1,6 +1,6 @@
 # PDE roadmap
 
-This is the execution map for the master specification. Every item is implemented without Docker or external paid services.
+This is the execution map for the delivered project. Every item is implemented without Docker or external paid services.
 
 | Card | Delivered capability |
 |---|---|
